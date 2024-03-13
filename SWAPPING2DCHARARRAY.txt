@@ -1,0 +1,29 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	char** anme = new char* [4];
+	for (int i = 0; i < 4; i++) {
+		anme[i] = new char[10];
+		cin >> anme[i];
+	}
+	for (int i = 0; i < 4; i++) {
+		cout << anme[i] << endl;
+	}
+
+
+	for (int i = 0; i < 2; i++) {
+		char* temp = anme[4-1-i];
+		anme[4 - 1 - i] = anme[i];
+		anme[i] = temp;
+	}
+	for (int i = 0; i < 4; i++) {
+		cout << anme[i] << endl;
+	}
+	for (int i = 0; i < 4; i++) {
+		delete[] anme[i];
+	}
+	delete[] anme;
+	anme = NULL;
+	return 0;
+}

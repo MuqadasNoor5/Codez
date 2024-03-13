@@ -1,0 +1,107 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+int FILErows();
+int stringLENGTH(char* array);
+void copyString(char* array1, char* array2);
+
+int main()
+{
+ int row=FILErows();
+ char** name1 = new char* [row];
+ char** name2 = new char* [row];
+ ifstream fin;
+ fin.open("output.txt");
+ char line[300];
+ int iteration = 0;
+ int* sizes1 = new int[row];
+ while (!fin.eof()) {
+	 fin >> line;
+	 int col = stringLENGTH(line);
+	 name1[iteration] = new char[col + 1];
+	 copyString(line, name1[iteration]);
+	 sizes1[iteration] = col;
+	 iteration++;
+ }
+ fin.close();
+ ifstream read;
+ read.open("matrix.txt");
+ char line1[300];
+ int it2 = 0;
+ int *sizes2 = new int[row];
+ while (!read.eof()) {
+	 read >> line1;
+	 int col = stringLENGTH(line1);
+	 name2[it2] = new char[col + 1];
+	 copyString(line1, name2[it2]);
+	 sizes2[it2] = col;
+	 it2++;
+ }
+ read.close();
+ int total_similar = 0;
+ for (int i = 0; i < row; i++) {
+
+	 for (int j = 0; j < row; j++) {
+		 int count = 0;
+		
+		 if (name1[i][0] == name2[j][0]) {
+			 if (sizes1[i] == sizes2[j]) {
+				 for (int k = 0; k < sizes1[i]; k++) {
+					 if (name1[i][k] == name2[j][k]) {
+						 count++;
+					 }
+				 }
+				 if (count == sizes1[i]) {
+					 cout << name1[i] << " EQUAL TO " << name2[j] << endl;
+					 total_similar++;
+				 }
+			}
+		 }
+	 }
+ }
+ cout << " SIMILAR WORDS FOUND : " << total_similar << endl;
+ for (int i = 0; i < row; i++) {
+	 delete[] name1[i];
+	 delete[] name2[i];
+ }
+ delete[] name1;
+ delete[] name2;
+ name1 = NULL;
+ name2 = NULL;
+ delete[] sizes1;
+ delete[] sizes2;
+ sizes1 = NULL;
+	 sizes2 = NULL;
+	return 0;
+}
+int FILErows() {
+	ifstream fin;
+	fin.open("output.txt");
+	if (!fin) {
+		cout << "ERROR IN OPENING FILE ! " << endl;
+		return 0;
+	}
+	int row = 0;
+	char line[100];
+	while (!fin.eof()) {
+		fin >> line;
+		row++;
+	}
+	fin.close();
+	return row;
+}
+int stringLENGTH(char* array) {
+	int size = 0;
+	for (int i = 0; array[i] != '\0'; i++) {
+		size++;
+	}
+	return size;
+}
+void copyString(char* array1, char* array2) {
+	int j = 0;
+	for (int i = 0; array1[i] != '\0'; i++) {
+		array2[j] = array1[i];
+		j++;
+	}
+	array2[j] = '\0';
+}

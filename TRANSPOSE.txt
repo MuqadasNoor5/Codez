@@ -1,0 +1,66 @@
+#include<iostream>
+using namespace std;
+int** MATRIX_TRANSPOSE(int** arr, int& row, int& col);
+int main()
+{
+	int row, col;
+	cout << " ENTER ROW : ";
+	cin >> row;
+	cout << "ENTER COL : ";
+	cin >> col;
+	int** matrix = new int* [row];
+	for (int j = 0; j < row; j++) {
+		matrix[j] = new int[col];
+	}
+	for (int i = 0; i < row; i++) {
+		cout << i << " Row # \n";
+		for (int j = 0; j < col; j++) {
+ cin>> matrix[i][j];
+		}
+		
+	}
+
+	cout << " ORIGINAL ARRAY IS : " << endl;
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			cout << matrix[i][j] << "  ";
+		}
+		cout << endl;
+	}
+	matrix=MATRIX_TRANSPOSE(matrix, row, col);
+	cout << " TRANSPOSE ARRAY IS : " << endl;
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			cout << matrix[i][j] << "  ";
+		}
+		cout << endl;
+	}
+
+	for (int i = 0; i < row; i++) {
+		delete[] matrix[i];
+	}
+	delete[] matrix;
+	matrix = NULL;
+	return 0;
+}
+int** MATRIX_TRANSPOSE(int** arr, int& row, int& col) {
+	int COL1 = row;
+	int ROW1 = col;
+	int** newarr = new int* [ROW1];
+	for (int i = 0; i < ROW1; i++) {
+		newarr[i] = new int[COL1];
+	}
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			newarr[j][i] = arr[i][j];
+		}
+	}
+	for (int i = 0; i < row; i++) {
+		delete[] arr[i];
+	}
+	delete[] arr;
+	arr = NULL;
+	row = ROW1;
+	col = COL1;
+	return newarr;
+}

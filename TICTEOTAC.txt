@@ -1,0 +1,53 @@
+#include<iostream>
+using namespace std;
+bool winnerCHECK(char player, char** array) {
+	for (int i = 0; i < 3; i++) {
+		if ((player == array[i][0])&&(player==array[i][1])&&(player==array[i][2]))
+			return true;
+		if ((player == array[0][i]) && (player == array[1][i]) && (player == array[2][i]))
+			return true;
+
+	}
+	if ((player == array[0][0]) && (player == array[1][1]) && (player == array[2][2]))
+		return true;
+	if ((player == array[0][2]) && (player == array[1][1]) && (player == array[2][0]))
+		return true;
+
+	return false;
+}
+
+int main()
+{
+	char** ticteotac = new  char*[3];
+	for (int i = 0; i < 3; i++) {
+	 ticteotac[i]=new char[3];
+	}
+	for (int i = 0; i < 3; i++) {
+		cout << " ROW # " << i + 1 << endl;
+		for (int j = 0; j < 3; j++) {
+			cin >> ticteotac[i][j];
+		}
+    }
+	bool Xwin = winnerCHECK('X', ticteotac);
+	bool Owin = winnerCHECK('O', ticteotac);
+	if (Xwin && Owin) {
+		cout << " WITHDRAW " << endl;
+	}
+	else if (Xwin) {
+		cout << " WINNER IS  X \n";
+
+	}
+	else if (Owin) {
+		cout << " WINNER IS  O \n";
+	}
+	else {
+		cout << "NO WIN " << endl;
+	}
+	for (int i = 0; i < 3; i++) {
+	delete[]	ticteotac[i] ;
+	}
+	delete[] ticteotac;
+	ticteotac = NULL;
+
+	return 0;
+}
